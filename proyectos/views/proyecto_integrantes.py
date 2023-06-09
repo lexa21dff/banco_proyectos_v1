@@ -1,3 +1,4 @@
+
 from rest_framework import viewsets
 from rest_framework import permissions
 from proyectos.serializers.lista_inscritos import *
@@ -18,9 +19,9 @@ class FichasUsuarioViewSet(viewsets.ModelViewSet):
     queryset = Inscrito.objects.all()
     serializer_class = ListaInscritoSerializer
     # permission_classes = [permissions.IsAuthenticated]
-    def get_fichas_usuario(self, request, *args, **kwargs):
+    def get_mis_grupos(self, request, *args, **kwargs):
         perfil_id =  kwargs['id_user']
-        inscritos = Inscrito.objects.filter(perfil_id=perfil_id)
+        inscritos = Inscrito.objects.filter(perfil_id=perfil_id , estado='activo', nombre_grupo__isnull=True)
  
         # Serializar los datos de los inscritos
         serializer = self.get_serializer(inscritos, many=True)

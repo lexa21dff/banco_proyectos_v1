@@ -21,9 +21,10 @@ from proyectos.views.lista_proyecto import *
 from proyectos.views.lista_entrega import *
 from proyectos.views.lista_inscritos import *
 from proyectos.views.lista_grupos import *
-from proyectos.views.ficha_usuario import *
+
 from proyectos.views.agregar_integrantes import *
 from proyectos.views.integrantes import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +38,7 @@ urlpatterns = [
     path('api/grupos/<int:id_user>/', ListaGruposViewSet.as_view({'get': 'get_mis_grupos'}), name='lista_entregas_por_proyecto'),
     path('api/agregar-integrantes/<int:id_user>/', AgregarIntegrantesViewSet.as_view({'get': 'get_inscritos'}), name='get_fichas_usuario'),
     path('api/integrantes/<int:grupo_id>/', IntegrantesViewSet.as_view({'get': 'get_integrantes'}), name='get_fichas_usuario'),
+
 
 ]
 

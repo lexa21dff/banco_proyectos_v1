@@ -1,7 +1,3 @@
-
-
-
-
 #Django
 from django.contrib.auth import authenticate
 #django REST Framework
