@@ -29,8 +29,10 @@ class AgregarIntegrantesViewSet(viewsets.ModelViewSet):
         fichas = inscritos.values_list('ficha', flat=True).distinct()
 
         # Filtrar los inscritos que tienen alguna de las fichas asociadas
-        inscritos_misma_ficha = Inscrito.objects.filter(ficha__in=fichas)
+        # Filtrar los inscritos que tienen alguna de las fichas asociadas y cumplen las condiciones adicionales
+        inscritos_misma_ficha = Inscrito.objects.filter(ficha__in=fichas, estado='activo', nombre_grupo__isnull=True)
 
+        
         # Serializar los datos de los inscritos
         serializer = self.get_serializer(inscritos_misma_ficha, many=True)
 
