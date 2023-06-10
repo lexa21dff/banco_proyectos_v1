@@ -32,6 +32,9 @@ ESTADO_PROYECTO = (
     ('terminado', 'terminado'),
     ('en revision', 'en revision'),
     ('en desarrollo', 'en desarrollo'),
+    ('rechazado', 'rechazado'),
+    ('en correccion',  'en correcion')
+    #
     # agragar otro estado
 )
 
@@ -191,6 +194,7 @@ class Proyecto(models.Model):
 
 class Entrega (models.Model):
     calificacion            = models.CharField(max_length=20, choices = CALIFICACION,null= True, blank= True)
+
     descripcion_entrega     = models.CharField(max_length=5000 )    
     respuesta_instructor    = models.CharField(max_length=5000, null= True, blank= True)  
     # Estado_entrega          = models.CharField(max_length=5000 )   
