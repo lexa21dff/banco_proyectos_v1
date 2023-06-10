@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from proyectos.models import Inscrito
 
-class ListaProyectosViewSet(viewsets.ModelViewSet):
+class ProyectosViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -19,9 +19,11 @@ class ListaProyectosViewSet(viewsets.ModelViewSet):
     def get_usuario_proyectos(self, request, *args, **kwargs):
         perfil_id = kwargs['id_user']
         inscrito = Inscrito.objects.filter(perfil_id=perfil_id)
-        grupo_ids = inscrito.values_list('nombre_grupo', flat=True)
         
-        inscritos = Inscrito.objects.filter(nombre_grupo__id__in=grupo_ids)  # Filtra los inscritos por los IDs de los grupos
+
+        fichas = inscrito.values_list('ficha', flat=True).distinct()
+        inscritos= Inscrito.objects.filter(ficha__in=fichas)
+          
         
         integrante_ids = inscritos.values_list('id', flat=True)  # Obtén los IDs de los inscritos filtrados
     
@@ -29,8 +31,3 @@ class ListaProyectosViewSet(viewsets.ModelViewSet):
     
         serializer = self.get_serializer(proyectos, many=True)
         return Response(serializer.data)
-
-
-         
-
-

@@ -21,7 +21,7 @@ from proyectos.views.lista_proyecto import *
 from proyectos.views.lista_entrega import *
 from proyectos.views.lista_inscritos import *
 from proyectos.views.lista_grupos import *
-
+from proyectos.views.Instructor_proyectos import *
 from proyectos.views.agregar_integrantes import *
 from proyectos.views.integrantes import *
 
@@ -32,7 +32,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/login/', UserLoginAPIView.as_view(), name='login'),
     path('api/signup/', UserSignUpAPIView.as_view(), name='login'),
-    path('api/proyectos/<int:user_id>/',ListaProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
+    path('api/proyectos/<int:id_user>/',ListaProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
+    path('api/proyectos-instructor/<int:id_user>/',ProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
     path('api/entregas/<int:id_proyecto>/', ListaEntregaViewSet.as_view({'get': 'get_entregas_por_proyecto'}), name='lista_entregas_por_proyecto'),
     path('api/inscritos/<int:id_user>/', ListaInscritosViewSet.as_view({'get': 'get_inscritos'}), name='lista_entregas_por_proyecto'),
     path('api/grupos/<int:id_user>/', ListaGruposViewSet.as_view({'get': 'get_mis_grupos'}), name='lista_entregas_por_proyecto'),

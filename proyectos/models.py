@@ -32,6 +32,7 @@ ESTADO_PROYECTO = (
     ('terminado', 'terminado'),
     ('en revision', 'en revision'),
     ('en desarrollo', 'en desarrollo'),
+    # agragar otro estado
 )
 
 
