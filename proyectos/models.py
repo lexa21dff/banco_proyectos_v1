@@ -24,15 +24,17 @@ TIPO_DOCUMENTO = (
 )
 
 CALIFICACION = (
+    ('en revision', 'en revision'),
     ('aprobado', 'Aprobado'),
-    ('desaprobado', 'desaprobado'),
+    ('No aprobado', 'No aprobado'),
 )
     
 ESTADO_PROYECTO = (
+    
     ('terminado', 'terminado'),
     ('en revision', 'en revision'),
     ('en desarrollo', 'en desarrollo'),
-    ('rechazado', 'rechazado'),
+    ('anulado', 'anulado'),
     ('en correccion',  'en correcion')
     #
     # agragar otro estado
@@ -193,7 +195,7 @@ class Proyecto(models.Model):
 
 
 class Entrega (models.Model):
-    calificacion            = models.CharField(max_length=20, choices = CALIFICACION,null= True, blank= True)
+    calificacion            = models.CharField(max_length=20, choices = CALIFICACION,default = 'en revision')
 
     descripcion_entrega     = models.CharField(max_length=5000 )    
     respuesta_instructor    = models.CharField(max_length=5000, null= True, blank= True)  

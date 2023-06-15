@@ -25,6 +25,9 @@ from proyectos.views.Instructor_proyectos import *
 from proyectos.views.agregar_integrantes import *
 from proyectos.views.integrantes import *
 
+from proyectos.views.estado_proyecto import obtener_estados_proyecto
+from proyectos.views.calificar_proyecto import CalificaProyectoViewSet
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,6 +43,8 @@ urlpatterns = [
     path('api/agregar-integrantes/<int:id_user>/', AgregarIntegrantesViewSet.as_view({'get': 'get_inscritos'}), name='get_fichas_usuario'),
     path('api/integrantes/<int:grupo_id>/', IntegrantesViewSet.as_view({'get': 'get_integrantes'}), name='get_fichas_usuario'),
 
+    path('api/calificar-proyecto/<int:proyecto_id>/<str:estado>/', CalificaProyectoViewSet.as_view({'put': 'actualizar_proyecto'}), name='calificar_proyecto'),
+    path('api/obtener-estados-proyecto/', obtener_estados_proyecto, name='obtener_estados_proyecto'),
 
 ]
 
