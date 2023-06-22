@@ -19,14 +19,19 @@ from proyectos.views.login import UserLoginAPIView
 from proyectos.views.signup import UserSignUpAPIView
 from proyectos.views.lista_proyecto import *
 from proyectos.views.lista_entrega import *
-from proyectos.views.lista_inscritos import *
+from proyectos.views.lista_inscritos import ListaInscritosViewSet
 from proyectos.views.lista_grupos import *
-from proyectos.views.Instructor_proyectos import *
+from proyectos.views.Instructor_proyectos import  *
 from proyectos.views.agregar_integrantes import *
-from proyectos.views.integrantes import *
+from proyectos.views.integrantes import IntegrantesViewSet
+from proyectos.views.integrantes_grupo   import *
 
 from proyectos.views.estado_proyecto import obtener_estados_proyecto
 from proyectos.views.calificar_proyecto import CalificaProyectoViewSet
+from proyectos.views.ficha_instructor import FichaInstructorViewSet
+from proyectos.views.calificacion_dell_proyecto import ListaDeProyectosViewSet
+
+from proyectos.views.buscar_proyectos import ProyectoList
 
 
 urlpatterns = [
@@ -35,16 +40,25 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/login/', UserLoginAPIView.as_view(), name='login'),
     path('api/signup/', UserSignUpAPIView.as_view(), name='login'),
-    path('api/proyectos/<int:id_user>/',ListaProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
-    path('api/proyectos-instructor/<int:id_user>/',ProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
+    path('buscar_proyectos/', ProyectoList.as_view()),
+    # aprendiz 
+    path('api/proyectos/<int:id_user>/',ListaProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='aprendiz'),
+    path('api/proyectos/<int:id_user>/',IntegrantesDelGruposViewSet.as_view({'get':'get_usuario_proyectos'}), name='aprendiz'),
     path('api/entregas/<int:id_proyecto>/', ListaEntregaViewSet.as_view({'get': 'get_entregas_por_proyecto'}), name='lista_entregas_por_proyecto'),
-    path('api/inscritos/<int:id_user>/', ListaInscritosViewSet.as_view({'get': 'get_inscritos'}), name='lista_entregas_por_proyecto'),
-    path('api/grupos/<int:id_user>/', ListaGruposViewSet.as_view({'get': 'get_mis_grupos'}), name='lista_entregas_por_proyecto'),
+    # instructor
+    path('api/calificar-proyecto/<int:proyecto_id>/<str:estado>/', CalificaProyectoViewSet.as_view({'put': 'actualizar_proyecto'}), name='instructor'),
+    # grupos
+    path('api/inscritos/<int:id_user>/', ListaInscritosViewSet.as_view({'get': 'get_inscritos'}), name='inscritos_ficha'),
+    path('api/grupos/<int:id_user>/', ListaGruposViewSet.as_view({'get': 'get_mis_grupos'}), name='mis_grupos'),
     path('api/agregar-integrantes/<int:id_user>/', AgregarIntegrantesViewSet.as_view({'get': 'get_inscritos'}), name='get_fichas_usuario'),
     path('api/integrantes/<int:grupo_id>/', IntegrantesViewSet.as_view({'get': 'get_integrantes'}), name='get_fichas_usuario'),
 
-    path('api/calificar-proyecto/<int:proyecto_id>/<str:estado>/', CalificaProyectoViewSet.as_view({'put': 'actualizar_proyecto'}), name='calificar_proyecto'),
+
     path('api/obtener-estados-proyecto/', obtener_estados_proyecto, name='obtener_estados_proyecto'),
+    path('api/proyectos-instructor/<int:ficha_id>/',ProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
+    path('api/fichas-instructor/<int:id_user>/',FichaInstructorViewSet.as_view({'get':'get_fichas'}), name='fichas_instructor'),
+
+    path('proyectos/ficha/<int:ficha_id>/', ListaDeProyectosViewSet.as_view({'get': 'get_usuario_proyectos'}), name='get_usuario_proyectos'),
 
 ]
 

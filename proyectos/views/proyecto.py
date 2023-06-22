@@ -10,6 +10,7 @@ class ProyectoViewSet(viewsets.ModelViewSet):
     """
     queryset = Proyecto.objects.all()
     serializer_class = ProyectoSerializer
+ 
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request})

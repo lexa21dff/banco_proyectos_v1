@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 
 from proyectos.views.funciones import *
 
-class FichasUsuarioViewSet(viewsets.ModelViewSet):
+class ProyectoIntegrantesViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """

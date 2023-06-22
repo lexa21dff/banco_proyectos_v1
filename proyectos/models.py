@@ -175,6 +175,7 @@ class Inscrito (models.Model):
         return str(self.perfil)
     
 class Proyecto(models.Model):
+
     nombre_proyecto     = models.CharField(max_length=300 )    
     descripcion         = models.CharField(max_length=5000 )    
     foto                = models.ImageField(upload_to='proyectos/foto', null=True, blank=True)
@@ -184,6 +185,7 @@ class Proyecto(models.Model):
 
     # documento       = models.FileField(upload_to = 'proyectos/documentos', null=True, blank=True)  # documento inicial del anteproyecto  
     estado              = models.CharField(max_length=20, choices = ESTADO_PROYECTO, default = 'en revision')
+    calificacion         = models.CharField(max_length=15,null= True, blank= True,)
 
     creado              = models.DateTimeField(auto_now_add = True)
     editado             = models.DateTimeField(auto_now = True)
