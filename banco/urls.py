@@ -15,20 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 from proyectos.views.login import UserLoginAPIView
 from proyectos.views.signup import UserSignUpAPIView
-from proyectos.views.lista_proyecto import *
-from proyectos.views.lista_entrega import *
-from proyectos.views.lista_inscritos import ListaInscritosViewSet
+
+from proyectos.views.usuario_proyectos import *
+from proyectos.views.proyecto_entregas import *
+from proyectos.views.proyecto_participantes import *
+
 from proyectos.views.lista_grupos import *
 from proyectos.views.Instructor_proyectos import  *
 from proyectos.views.agregar_integrantes import *
 from proyectos.views.integrantes import IntegrantesViewSet
-from proyectos.views.integrantes_grupo   import *
 
-from proyectos.views.estado_proyecto import obtener_estados_proyecto
+
 from proyectos.views.calificar_proyecto import CalificaProyectoViewSet
-from proyectos.views.ficha_instructor import FichaInstructorViewSet
+from proyectos.views.usuario_ficha import *
 from proyectos.views.calificacion_dell_proyecto import ListaDeProyectosViewSet
 
 from proyectos.views.buscar_proyectos import ProyectoList
@@ -39,24 +41,25 @@ urlpatterns = [
     path('api/', include('proyectos.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/login/', UserLoginAPIView.as_view(), name='login'),
-    path('api/signup/', UserSignUpAPIView.as_view(), name='login'),
+    path('api/signup/', UserSignUpAPIView.as_view(), name='signup'),
+    # Proyecto
     path('buscar_proyectos/', ProyectoList.as_view()),
-    # aprendiz 
-    path('api/proyectos/<int:id_user>/',ListaProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='aprendiz'),
-    path('api/proyectos/<int:id_user>/',IntegrantesDelGruposViewSet.as_view({'get':'get_usuario_proyectos'}), name='aprendiz'),
-    path('api/entregas/<int:id_proyecto>/', ListaEntregaViewSet.as_view({'get': 'get_entregas_por_proyecto'}), name='lista_entregas_por_proyecto'),
+    path('api/usuario-proyectos/<int:user_id>/', UsuarioProyectoViewSet.as_view({'get':'get_usuario_proyectos'}), name='lista_de_proyectos_de_un_usuario'),#terminado
+    path('api/proyecto-participantes/<int:proyecto_id>/', ProyectoParticpantesViewSet.as_view({'get':'get_participantes'}), name='participantes_del_proyecto'),#terminado
+    path('api/proyecto-entregas/<int:id_proyecto>/', ProyectoEntregaViewSet.as_view({'get': 'get_entregas_por_proyecto'}), name='lista_entregas_por_proyecto'),#terminado
+    
+    
     # instructor
-    path('api/calificar-proyecto/<int:proyecto_id>/<str:estado>/', CalificaProyectoViewSet.as_view({'put': 'actualizar_proyecto'}), name='instructor'),
+    path('api/calificar-proyecto/<int:proyecto_id>/<str:estado>/', CalificaProyectoViewSet.as_view({'put': 'actualizar_proyecto'}), name='calificar_proyecto'),#terminado
     # grupos
-    path('api/inscritos/<int:id_user>/', ListaInscritosViewSet.as_view({'get': 'get_inscritos'}), name='inscritos_ficha'),
-    path('api/grupos/<int:id_user>/', ListaGruposViewSet.as_view({'get': 'get_mis_grupos'}), name='mis_grupos'),
-    path('api/agregar-integrantes/<int:id_user>/', AgregarIntegrantesViewSet.as_view({'get': 'get_inscritos'}), name='get_fichas_usuario'),
+    path('api/agregar-integrantes/<int:id_user>/', AgregarInscritosViewSet.as_view({'get': 'get_inscritos'}), name='agregar_inscritos'),#terminado
+    path('api/usuario-grupos/<int:id_user>/', UsuarioGruposViewSet.as_view({'get': 'get_mis_grupos'}), name='lista_de_grupos_de un_usuario'),#terminado
     path('api/integrantes/<int:grupo_id>/', IntegrantesViewSet.as_view({'get': 'get_integrantes'}), name='get_fichas_usuario'),
 
 
-    path('api/obtener-estados-proyecto/', obtener_estados_proyecto, name='obtener_estados_proyecto'),
+   
     path('api/proyectos-instructor/<int:ficha_id>/',ProyectosViewSet.as_view({'get':'get_usuario_proyectos'}), name='entregas_por_usuario_proyecto'),
-    path('api/fichas-instructor/<int:id_user>/',FichaInstructorViewSet.as_view({'get':'get_fichas'}), name='fichas_instructor'),
+    path('api/usuario-ficha/<int:user_id>/', UsuarioFichaViewSet.as_view({'get':'get_fichas'}), name='lista_fichas_de_un_usuario'),#terminado
 
     path('proyectos/ficha/<int:ficha_id>/', ListaDeProyectosViewSet.as_view({'get': 'get_usuario_proyectos'}), name='get_usuario_proyectos'),
 
